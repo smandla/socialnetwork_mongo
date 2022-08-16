@@ -1,0 +1,23 @@
+{
+  "name": "socialnetwork_mongo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smandla/socialnetwork_mongo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/smandla/socialnetwork_mongo/issues"
+  },
+  "homepage": "https://github.com/smandla/socialnetwork_mongo#readme",
+  "dependencies": {
+    "mongoose": "^6.5.2"
+  }
+}
