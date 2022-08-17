@@ -11,7 +11,6 @@ const getThoughts = (req, res) => {
 };
 const getSingleThought = (req, res) => {
   Thoughts.findOne({ _id: req.params._id })
-    .populate("reactions")
     .then((thought) => res.json(thought))
     .catch((err) => res.status(500).json(err));
 };
@@ -41,7 +40,32 @@ const createThought = (req, res) => {
     });
 };
 
-// const createReaction = (req, res) => {
-//     Thoughts.
-// }
-module.exports = { getThoughts, getSingleThought, createThought };
+const createReaction = (req, res) => {
+  console.log(req.params._id);
+  Thoughts.findOneAndUpdate(
+    { _id: req.params._id },
+    {
+      $push: {
+        reactions: req.body,
+      },
+    },
+    { runValidators: true, new: true }
+  )
+    .then((thought) => {
+      console.log(thought);
+      if (thought) {
+        res.json(thought);
+      } else {
+        res.status(404).json({ message: "No thought w this id" });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json(err);
+    });
+};
+module.exports = {
+  getThoughts,
+  getSingleThought,
+  createThought,
+  createReaction,
+};
