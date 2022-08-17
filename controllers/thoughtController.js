@@ -9,4 +9,9 @@ const getThoughts = (req, res) => {
     }
   });
 };
-module.exports = { getThoughts };
+const getSingleThought = (req, res) => {
+  Thoughts.findOne({ _id: req.params._id })
+    .then((thought) => res.json(thought))
+    .catch((err) => res.status(500).json(err));
+};
+module.exports = { getThoughts, getSingleThought };

@@ -11,7 +11,13 @@ const getUsers = (req, res) => {
       res.status(500).json(err);
     });
 };
-module.exports = { getUsers };
+const getSingleUser = (req, res) => {
+  User.findOne({ _id: req.params._id })
+    .populate("thoughts")
+    .then((user) => res.json(user))
+    .catch((err) => res.status(500).json(err));
+};
+module.exports = { getUsers, getSingleUser };
 /**
  * app.get("/api/users", (req, res) => {
   User.find({}, (err, result) => {
