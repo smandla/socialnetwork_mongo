@@ -63,9 +63,28 @@ const createReaction = (req, res) => {
       res.status(500).json(err);
     });
 };
+
+const deleteReaction = (req, res) => {
+  console.log(req.params._id, req.params.reactionId);
+  Thoughts.findOneAndUpdate(
+    { _id: req.params._id },
+    { $pull: { reactions: { reactionId: req.params.reactionId } } },
+    {
+      runValidators: true,
+      new: true,
+    }
+  )
+    .then((thought) =>
+      !thought
+        ? res.status(404).json({ message: "No thought with this id!" })
+        : res.json(thought)
+    )
+    .catch((err) => res.status(500).json(err));
+};
 module.exports = {
   getThoughts,
   getSingleThought,
   createThought,
   createReaction,
+  deleteReaction,
 };
