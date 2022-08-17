@@ -1,7 +1,8 @@
 const { User } = require("../models");
 const getUsers = (req, res) => {
-  User.find({})
-    .populate("thoughts")
+  User.find()
+    .populate({ path: "thoughts", select: "_id" })
+    .populate("friends")
     .select("-__v")
     .then((result) => {
       console.log(result);

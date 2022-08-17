@@ -1,40 +1,48 @@
 const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    validate: {
-      validator: function (email) {
-        return /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test(email);
+const userSchema = new mongoose.Schema(
+  {
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      validate: {
+        validator: function (email) {
+          return /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test(email);
+        },
       },
+      message: "Enter a valid email.",
+      //validation
     },
-    message: "Enter a valid email.",
-    //validation
+    thoughts: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Thoughts",
+      },
+    ],
+    friends: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
   },
-  thoughts: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Thoughts",
+  {
+    toJSON: {
+      virtuals: true,
     },
-  ],
-  friends: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-  ],
-  //   thoughts: {
-  //     t,
-  //   },
-  //   friends:
+    id: false,
+  }
+);
+
+userSchema.virtual("friendCount").get(function () {
+  return this.friends.length;
 });
 const User = mongoose.model("User", userSchema);
 
