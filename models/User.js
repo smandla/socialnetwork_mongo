@@ -19,6 +19,18 @@ const userSchema = new mongoose.Schema({
     message: "Enter a valid email.",
     //validation
   },
+  thoughts: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Thoughts",
+    },
+  ],
+  friends: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
   //   thoughts: {
   //     t,
   //   },
