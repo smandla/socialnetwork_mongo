@@ -34,7 +34,27 @@ const deleteUser = (req, res) => {
     )
     .catch((err) => res.status(500).json(err));
 };
-module.exports = { getUsers, getSingleUser, createUser, deleteUser };
+
+const addFriend = (req, res) => {
+  console.log("USERID", req.params._id);
+  console.log("friendsID", req.params.friendsId);
+  User.findOneAndUpdate(
+    { _id: req.params._id },
+    { $push: { friends: req.params.friendsId } },
+    { runValidators: true, new: true }
+  )
+    .then((user) => {
+      console.log("idfvcnief");
+      console.log(user);
+      if (!user) {
+        res.status(404).json({ message: "no user with this id" });
+      } else {
+        res.json(user);
+      }
+    })
+    .catch((err) => res.status(500).json(err));
+};
+module.exports = { getUsers, getSingleUser, createUser, deleteUser, addFriend };
 /**
  * app.get("/api/users", (req, res) => {
   User.find({}, (err, result) => {
