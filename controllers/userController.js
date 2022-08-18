@@ -54,7 +54,32 @@ const addFriend = (req, res) => {
     })
     .catch((err) => res.status(500).json(err));
 };
-module.exports = { getUsers, getSingleUser, createUser, deleteUser, addFriend };
+
+const deleteFriend = (req, res) => {
+  User.findOneAndUpdate(
+    { _id: req.params._id },
+    { $pull: { friends: req.params.friendsId } },
+    { new: true }
+  )
+    .then((user) => {
+      if (user) {
+        res.json({ message: "Friend successfully deleted" });
+      } else {
+        return res.status(404).json({ message: "no user with this id" });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json(err);
+    });
+};
+module.exports = {
+  getUsers,
+  getSingleUser,
+  createUser,
+  deleteUser,
+  addFriend,
+  deleteFriend,
+};
 /**
  * app.get("/api/users", (req, res) => {
   User.find({}, (err, result) => {

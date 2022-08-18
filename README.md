@@ -11,7 +11,7 @@ Users
 
 User's friend's
 
-- POST add new friend to user friend list
+- POST add new friend to user friend list (DONE)
 - DELETE friend from user friend list
 
 Thoughts
