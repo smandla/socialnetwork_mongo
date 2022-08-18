@@ -5,9 +5,9 @@ Users
 
 - GET all users (DONE)
 - GET single user by \_id and populated thought and friend
-- POST a new user
+- POST a new user (DONE)
 - PUT update a user by \_id
-- DELETE user by \_id (bonus - remove user's associated thoughts)
+- DELETE user by \_id (bonus - remove user's associated thoughts) (DONE)
 
 User's friend's
 
@@ -16,9 +16,9 @@ User's friend's
 
 Thoughts
 
-- GET all thoughts
-- GET single thought by id
-- POST create new thought and push to user's thoughts array field
+- GET all thoughts (DONE)
+- GET single thought by id (DONE)
+- POST create new thought and push to user's thoughts array field (DONE)
 - PUT update thought by \_id
 - DELETE remove thought by \_id
 

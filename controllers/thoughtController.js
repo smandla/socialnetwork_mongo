@@ -40,6 +40,29 @@ const createThought = (req, res) => {
     });
 };
 
+const deleteThought = (req, res) => {
+  Thoughts.findOneAndDelete({ _id: req.params._id }).then((thought) => {
+    if (!thought) {
+      res.status(404).json({ message: "No thought w that id" });
+    }
+    return User.findOneAndUpdate(
+      { thoughts: req.params._id },
+      { $pull: { thoughts: req.params._id } },
+      { new: true }
+    )
+      .then((user) => {
+        if (user) {
+          res.json({ message: "Thought successfully deleted" });
+        } else {
+          return res.status(404).json({ message: "no user with this id" });
+        }
+      })
+      .catch((err) => {
+        res.status(500).json(err);
+      });
+  });
+};
+
 const createReaction = (req, res) => {
   console.log(req.params._id);
   Thoughts.findOneAndUpdate(
@@ -87,4 +110,5 @@ module.exports = {
   createThought,
   createReaction,
   deleteReaction,
+  deleteThought,
 };

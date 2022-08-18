@@ -1,4 +1,4 @@
-const { User } = require("../models");
+const { User, Thoughts } = require("../models");
 const getUsers = (req, res) => {
   User.find()
     .populate({ path: "thoughts", select: "_id" })
@@ -15,10 +15,26 @@ const getUsers = (req, res) => {
 const getSingleUser = (req, res) => {
   User.findOne({ _id: req.params._id })
     .populate("thoughts")
+    .select("-__v")
     .then((user) => res.json(user))
     .catch((err) => res.status(500).json(err));
 };
-module.exports = { getUsers, getSingleUser };
+const createUser = (req, res) => {
+  User.create(req.body)
+    .then((user) => res.json(user))
+    .catch((err) => res.status(500).json(err));
+};
+const deleteUser = (req, res) => {
+  //   console.log(req.params._id);
+  User.findOneAndDelete({ _id: req.params._id })
+    .then((user) =>
+      !user
+        ? res.status(404).json({ message: "No user w that id" })
+        : Thoughts.deleteMany({ _id: { $in: user.thoughts } })
+    )
+    .catch((err) => res.status(500).json(err));
+};
+module.exports = { getUsers, getSingleUser, createUser, deleteUser };
 /**
  * app.get("/api/users", (req, res) => {
   User.find({}, (err, result) => {
