@@ -12,7 +12,7 @@ Users
 User's friend's
 
 - POST add new friend to user friend list (DONE)
-- DELETE friend from user friend list
+- DELETE friend from user friend list (DONE)
 
 Thoughts
 

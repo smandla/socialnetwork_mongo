@@ -27,14 +27,33 @@ const createUser = (req, res) => {
 const deleteUser = (req, res) => {
   //   console.log(req.params._id);
   User.findOneAndDelete({ _id: req.params._id })
-    .then((user) =>
+    .then((user) => {
+      console.log(user);
       !user
         ? res.status(404).json({ message: "No user w that id" })
-        : Thoughts.deleteMany({ _id: { $in: user.thoughts } })
-    )
+        : Thoughts.deleteMany({
+            _id: { $in: user.thoughts },
+          });
+      res.status(200).json({ message: "Sucessfully deleted" });
+    })
     .catch((err) => res.status(500).json(err));
 };
 
+const updateUser = (req, res) => {
+  User.findOneAndUpdate(
+    { _id: req.params._id },
+    { $set: req.body },
+    { runValidators: true, new: true }
+  )
+    .then((user) => {
+      if (!user) {
+        res.status(404).json({ message: "no user with this id" });
+      } else {
+        res.json(user);
+      }
+    })
+    .catch((err) => res.status(500).json(err));
+};
 const addFriend = (req, res) => {
   console.log("USERID", req.params._id);
   console.log("friendsID", req.params.friendsId);
@@ -79,6 +98,7 @@ module.exports = {
   deleteUser,
   addFriend,
   deleteFriend,
+  updateUser,
 };
 /**
  * app.get("/api/users", (req, res) => {
