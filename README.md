@@ -14,7 +14,7 @@ Using MongoDB, Express, Node, and JavaScript, models, controllers, and routes ar
 
 - [Installation](#installation)
 - [Technologies](#technologies)
-- [Deployed Link](#deployed%20link)
+- [Demo Link](#demo%20link)
 - [Usage](#usage)
 - [User Information](#user%20information)
 - [Credits](#credits)
@@ -38,7 +38,7 @@ npm i
 
 ## Demo Link
 
-[Demo Link](https://tech-blog-mod-14.herokuapp.com/)
+[Demo Link](https://www.youtube.com/watch?v=5Ox39rB0SMs)
 
 ## Usage
 
