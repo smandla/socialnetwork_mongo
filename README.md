@@ -6,7 +6,7 @@ Users
 - GET all users (DONE)
 - GET single user by \_id and populated thought and friend
 - POST a new user (DONE)
-- PUT update a user by \_id
+- PUT update a user by \_id (DONE)
 - DELETE user by \_id (bonus - remove user's associated thoughts) (DONE)
 
 User's friend's
@@ -19,10 +19,10 @@ Thoughts
 - GET all thoughts (DONE)
 - GET single thought by id (DONE)
 - POST create new thought and push to user's thoughts array field (DONE)
-- PUT update thought by \_id
-- DELETE remove thought by \_id
+- PUT update thought by \_id (DONE)
+- DELETE remove thought by \_id (DONE)
 
 Reactions
 
-- POST reaction stored in single thought's reactions array field
-- DELETE pull and remove a reaction by reactionId val
+- POST reaction stored in single thought's reactions array field (DONE)
+- DELETE pull and remove a reaction by reactionId val (DONE)

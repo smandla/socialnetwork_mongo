@@ -56,6 +56,7 @@ const thoughtSchema = new mongoose.Schema(
     toJSON: {
       getters: true,
     },
+    id: false,
   }
 );
 

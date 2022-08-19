@@ -2,7 +2,6 @@ const { Thoughts, User } = require("../models");
 const getThoughts = (req, res) => {
   Thoughts.find({}, (err, result) => {
     if (result) {
-      console.log(result);
       res.status(200).json(result);
     } else {
       res.status(500).json(err);
@@ -15,11 +14,9 @@ const getSingleThought = (req, res) => {
     .catch((err) => res.status(500).json(err));
 };
 
-//TODO: push created thought's id to associated user's thoughts
 const createThought = (req, res) => {
   Thoughts.create(req.body)
     .then((thought) => {
-      console.log(thought);
       return User.findOneAndUpdate(
         { _id: req.body.userId },
         { $push: { thoughts: thought._id } },
@@ -27,7 +24,6 @@ const createThought = (req, res) => {
       );
     })
     .then((user) => {
-      console.log(user);
       if (user) {
         res.json({ message: "successfully created thought" });
       } else {
@@ -62,9 +58,27 @@ const deleteThought = (req, res) => {
       });
   });
 };
+const updateThought = (req, res) => {
+  Thoughts.findOneAndUpdate(
+    { _id: req.params._id },
+    { $set: req.body },
+    { runValidators: true, new: true }
+  )
+    .then((thought) => {
+      if (thought) {
+        res.json(thought);
+      } else {
+        return res.status(404).json({
+          message: "No thought with this id",
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json(err);
+    });
+};
 
 const createReaction = (req, res) => {
-  console.log(req.params._id);
   Thoughts.findOneAndUpdate(
     { _id: req.params._id },
     {
@@ -75,7 +89,6 @@ const createReaction = (req, res) => {
     { runValidators: true, new: true }
   )
     .then((thought) => {
-      console.log(thought);
       if (thought) {
         res.json(thought);
       } else {
@@ -88,7 +101,6 @@ const createReaction = (req, res) => {
 };
 
 const deleteReaction = (req, res) => {
-  console.log(req.params._id, req.params.reactionId);
   Thoughts.findOneAndUpdate(
     { _id: req.params._id },
     { $pull: { reactions: { reactionId: req.params.reactionId } } },
@@ -111,4 +123,5 @@ module.exports = {
   createReaction,
   deleteReaction,
   deleteThought,
+  updateThought,
 };
